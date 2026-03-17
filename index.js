@@ -1,4 +1,4 @@
-import { format } from './src/format.js';
+import { format as mkfmt } from './src/format.js';
 
 const uninitialised = Symbol("uninitialised");
 
@@ -93,7 +93,7 @@ function fmt_locale_fallback(key, ...format) {
         console.error(`ezlocale: missing key \`${key}\` in fallback locale.`);
         return '';
     }
-    return format(String(msg), ...format);
+    return mkfmt(String(msg), ...format);
 }
 
 export function fmt_locale_specific(language, key, ...format) {
@@ -106,7 +106,7 @@ export function fmt_locale_specific(language, key, ...format) {
         console.error(`ezlocale: missing key \`${key}\` for locale ${language}.`);
         return fmt_locale_fallback(key, ...format);
     }
-    return format(String(msg), ...format);
+    return mkfmt(String(msg), ...format);
 }
 
 export function fmt_locale(key, ...format) {

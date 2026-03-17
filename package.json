@@ -16,5 +16,5 @@
     "url": "https://github.com/cornusandu-org/ezlocale/issues"
   },
   "homepage": "https://github.com/cornusandu-org/ezlocale#readme",
-  "exports": "./src/index.js"
+  "exports": "./index.js"
 }

@@ -85,7 +85,7 @@ export async function config(options) {
 	}
 }
 
-function fmt_locale_fallback(key, ...format) {
+function fmt_locale_fallback(key, format) {
 	const fallbacklang = get(_config, "lang.fallback");
 	if (fallbacklang === uninitialised) {
 		console.error(`ezlocale: invalid fallback locale ${String(fallbacklang)} (uninitialised).`);
@@ -101,32 +101,32 @@ function fmt_locale_fallback(key, ...format) {
 		console.error(`ezlocale: missing key \`${key}\` in fallback locale.`);
 		return '';
 	}
-	return mkfmt(String(msg), ...format);
+	return mkfmt(String(msg), format, ...fmt);
 }
 
-export function fmt_locale_specific(language, key, ...format) {
+export function fmt_locale_specific(language, key, format, ...fmt) {
 	if (translations === uninitialised) {
 		console.error(`ezlocale: attempting to resolve locale before initialisation.`);
 		return '';
 	}
 	const locale = translations.get(language);
 	if (locale === undefined) {
-		return fmt_locale_fallback(key, ...format);
+		return fmt_locale_fallback(key, format, ...fmt);
 	}
 	const msg = get(locale, key);
 	if (msg === uninitialised) {
 		console.error(`ezlocale: missing key \`${key}\` for locale ${language}.`);
-		return fmt_locale_fallback(key, ...format);
+		return fmt_locale_fallback(key, format, ...fmt);
 	}
-	return mkfmt(String(msg), ...format);
+	return mkfmt(String(msg), format, ...fmt);
 }
 
-export function fmt_locale(key, ...format) {
+export function fmt_locale(key, format, ...fmt) {
 	const language = get(_config, "lang.current");
 
 	if (language === uninitialised) {
-		return fmt_locale_fallback(key, ...format);
+		return fmt_locale_fallback(key, format, ...fmt);
 	}
 	
-	return fmt_locale_specific(language, key, ...format);
+	return fmt_locale_specific(language, key, format, ...fmt);
 }

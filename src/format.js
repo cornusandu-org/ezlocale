@@ -1,9 +1,9 @@
-export function format(msg, ...args) {
+export function format(msg, format = undefined, ...fmt) {
     let i = 0;
 
-    const str = String(msg).replace(/%[sdihf%]/g, token => {
+    let str1 = String(msg).replace(/%[sdihf%]/g, token => {
         if (token === "%%") return "%";
-        const arg = args[i++];
+        const arg = fmt[i++];
 
         switch (token) {
             case "%s": return String(arg);
@@ -16,9 +16,18 @@ export function format(msg, ...args) {
         }
     });
 
-    if (i < args.length) {
-        return str + " " + args.slice(i).join(" ");  // concatenate remaining arguments to the formatted string (if any; seperated by spaces)
+    if (i < fmt.length) {
+        str1 = str1 + " " + fmt.slice(i).join(" ");  // concatenate remaining arguments to the formatted string (if any; seperated by spaces)
     }
 
-    return str;
+    let str2 = str1;
+
+    if (format === undefined) return str2;
+
+    for (const [key, value] of Object.entries(format)) {
+        if (key === null || key === undefined) continue;
+        str2 = str2.replaceAll(`{{${String(key)}}}`, String(value));
+    }
+
+    return str2;
 }

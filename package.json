@@ -1,6 +1,6 @@
 {
   "name": "ezlocale",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,6 @@
     "url": "https://github.com/cornusandu-org/ezlocale/issues"
   },
   "homepage": "https://github.com/cornusandu-org/ezlocale#readme",
-  "exports": "./index.js"
+  "exports": "./index.js",
+  "type": "module"
 }

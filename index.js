@@ -67,6 +67,10 @@ export async function add_locale(language_code, locale) {
 }
 
 export async function config(options) {
+    if (options == undefined || options == null) {
+        console.warn("ezlocale: config(undefined || null) called.");
+        return;
+    }
     for (const [key, value] of Object.entries(options)) {
         if (key === undefined || key === null || value === undefined || value === null) continue;
         set(_config, key, value);

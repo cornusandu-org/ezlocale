@@ -1,4 +1,4 @@
-import { format as mkfmt } from './src/format.js';
+import { format as mkfmt, set_format_config } from './src/format.js';
 
 const uninitialised = Symbol("uninitialised");
 
@@ -83,6 +83,7 @@ export async function config(options) {
 		if (key === undefined || key === null || value === undefined || value === null) continue;
 		set(_config, key, value);
 	}
+	set_format_config(_config);
 }
 
 function fmt_locale_fallback(key, format) {
